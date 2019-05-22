@@ -11,20 +11,28 @@ export default class Main extends Component
 
     state=
     {
+        contador:0,
         objFull:[],
         cepInput:"24220045"
     };
+
+    incrementarContador = () =>
+    {
+        this.setState(prevState => ({contador:prevState.contador+1}));
+    }
 
     
 
     buscarNaApi = async (cep) =>
     {
+        console.log(this.state.contador);
         try{ //conexão ==true
            const retorno = await api.get(cep+"/json")
            const  objFull  = retorno.data;
            console.log(objFull);
            console.log(objFull.bairro);
            this.setState({objFull});
+           this.incrementarContador();
         }
         catch(e){ //catch para caso esteja sem internet
             console.log("Erro na requisião da API");
