@@ -13,7 +13,7 @@ export default class Main extends Component
     {
         contador:0,
         objFull:[],
-        cepInput:"24220045"
+        cepInput:""
     };
 
     incrementarContador = () =>
@@ -54,6 +54,9 @@ export default class Main extends Component
             if(validacep.test(cep)){
                 this.buscarNaApi(cep); //buscar dentro da api
             }
+            else{ //cep nao foi encontrado
+
+            }
 
 
         }
@@ -72,27 +75,29 @@ export default class Main extends Component
     gerarTabelas()
     {
         
-        if(this.state.contador==0)
+        if(this.state.contador!=0)
         {
-            return <Text>Vazio</Text>;
+            return(  
+                <View style={estilos.container} >
+                    <Text>Cep: {this.state.objFull.cep}</Text>
+                    <Text>Rua: {this.state.objFull.logradouro}</Text>
+                    <Text>Bairro: {this.state.objFull.bairro}</Text>
+                    <Text>Cidade: {this.state.objFull.localidade}</Text>
+                    <Text>Estado: {this.state.objFull.uf}</Text>
+                </View>
+    
+            )
         }
-        return  <Text>
-                    Cep: {this.state.objFull.cep}
-                    Rua: {this.state.objFull.logradouro}
-                    Bairro: {this.state.objFull.Bairro}
-                    Cidade: {this.state.objFull.localidade}
-                    Estado: {this.state.objFull.uf}
-                </Text>;
     }
 
     render()
     {
         return(
-            <View>
+            <View style={estilos.container}>
             <Text>Consulta CEP</Text>
             <Text>Busque endereços de forma simples digitando apenas o  CEP</Text>
             <TextInput
-                placeholder="242200-045"
+                placeholder="12345678"
                 style={estilos.inputDoCep}
                 onChangeText={this.setaCep}
                 value={this.state.cepInput}>
@@ -102,7 +107,7 @@ export default class Main extends Component
                 onPress={
                     ()=>this.ValidaCep(this.state.cepInput)
                     }>
-                <Text>
+                <Text style={estilos.botaoConfirmarTexto}>
                     Confirmar
                 </Text>
             </TouchableOpacity>
@@ -117,6 +122,11 @@ export default class Main extends Component
 
 const estilos=StyleSheet.create(
     {
+        container:
+        {
+            flex:1,
+            backgroundColor: "#f2f2f2"
+        },
         inputDoCep:
         {
             margin:15,
@@ -134,6 +144,12 @@ const estilos=StyleSheet.create(
             justifyContent: "center",
             alignItems:"center",
             marginTop:10
+        },
+        botaoConfirmarTexto:
+        {
+            fontSize:16,
+            color:"#da552f",
+            fontWeight:"bold"
         },
         loading:{
             position: 'absolute',
