@@ -55,7 +55,14 @@ export default class Main extends Component
                 this.buscarNaApi(cep); //buscar dentro da api
             }
             else{ //cep nao foi encontrado
-
+                Alert.alert(
+                    'Não foi possivel concluir',
+                    'Cep nao foi encontrado',
+                    [
+                        {text: 'Ok',onPress:()=>console.log('Botao ok foi pressionado')},
+                    ],
+                    {cancelable:false},
+                );
             }
 
 
