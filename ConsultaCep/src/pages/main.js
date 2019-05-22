@@ -13,7 +13,8 @@ export default class Main extends Component
     {
         return(
             <View>
-            <Text>Ola Mundo</Text>
+            <Text>Consulta CEP</Text>
+            <Text>Busque endereços de forma simples digitando apenas o  CEP</Text>
             </View>
         );
     }
