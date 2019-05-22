@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,Text,FlatList,TouchableOpacity,StyleSheet,TextInput,Alert} from 'react-native'
+import {View,Text,FlatList,TouchableOpacity,StyleSheet,TextInput,Alert,ActivityIndicator} from 'react-native'
 import api from '../services/api'
 
 export default class Main extends Component
@@ -11,8 +11,11 @@ export default class Main extends Component
 
     state=
     {
+        objFull:[],
         cepInput:"24220045"
     };
+
+    
 
     buscarNaApi = async (cep) =>
     {
@@ -21,9 +24,7 @@ export default class Main extends Component
            const  objFull  = retorno.data;
            console.log(objFull);
            console.log(objFull.bairro);
-
-           
-
+           this.setState({objFull});
         }
         catch(e){ //catch para caso esteja sem internet
             console.log("Erro na requisião da API");
@@ -43,7 +44,7 @@ export default class Main extends Component
             var validacep = /^[0-9]{8}$/;//Expressão regular para validar o CEP.
 
             if(validacep.test(cep)){
-                this.buscarNaApi(cep);
+                this.buscarNaApi(cep); //buscar dentro da api
             }
 
 
@@ -58,6 +59,15 @@ export default class Main extends Component
                 {cancelable: false},
               );
         }
+    }
+
+    gerarTabelas()
+    {
+        if(this.state.objFull==null)
+        {
+            return <Text>Vazio</Text>;
+        }
+        return <Text>Nao ta vazio</Text>;
     }
 
     render()
@@ -80,10 +90,10 @@ export default class Main extends Component
                 <Text>
                     Confirmar
                 </Text>
-                
             </TouchableOpacity>
+            {this.gerarTabelas()}
             </View>
-        );
+            );
     }
 }
 
@@ -102,5 +112,14 @@ const estilos=StyleSheet.create(
         botaoConfirmar:
         {
             fontSize:20
+        },
+        loading:{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
         }
     });
