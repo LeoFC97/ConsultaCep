@@ -71,11 +71,18 @@ export default class Main extends Component
 
     gerarTabelas()
     {
-        if(this.state.objFull==null)
+        
+        if(this.state.contador==0)
         {
             return <Text>Vazio</Text>;
         }
-        return <Text>Nao ta vazio</Text>;
+        return  <Text>
+                    Cep: {this.state.objFull.cep}
+                    Rua: {this.state.objFull.logradouro}
+                    Bairro: {this.state.objFull.Bairro}
+                    Cidade: {this.state.objFull.localidade}
+                    Estado: {this.state.objFull.uf}
+                </Text>;
     }
 
     render()
@@ -119,7 +126,14 @@ const estilos=StyleSheet.create(
         },
         botaoConfirmar:
         {
-            fontSize:20
+            height:32,
+            borderRadius:5,
+            borderWidth:2,
+            borderColor:"#DA552F",
+            backgroundColor:"transparent",
+            justifyContent: "center",
+            alignItems:"center",
+            marginTop:10
         },
         loading:{
             position: 'absolute',
