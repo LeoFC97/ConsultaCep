@@ -5,7 +5,6 @@ const api = axios.create({
    /* https://viacep.com.br/ws/01001000/json/ */ /*exemplo de url completa*/ 
 });
 
-//http://127.0.0.1:3001/api
 
 
 export default api;
