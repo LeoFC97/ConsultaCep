@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View,Text,FlatList,TouchableOpacity,StyleSheet,TextInput} from 'react-native'
+import {View,Text,FlatList,TouchableOpacity,StyleSheet,TextInput,Alert} from 'react-native'
 import api from '../services/api'
 
 export default class Main extends Component
@@ -11,16 +11,52 @@ export default class Main extends Component
 
     state=
     {
-        docs:[],
-        cepInput:""
+        cepInput:"24220045"
     };
 
-    ValidaCep (cepRecebido)
+    buscarNaApi = async (cep) =>
     {
-        return
-        {
-            console.log("valida cep")
-            console.log("Cep recebido: " +cepRecebido); 
+        try{ //conexão ==true
+           const retorno = await api.get(cep+"/json")
+           const  objFull  = retorno.data;
+           console.log(objFull);
+           console.log(objFull.bairro);
+
+           
+
+        }
+        catch(e){ //catch para caso esteja sem internet
+            console.log("Erro na requisião da API");
+            console.log(e);
+        }
+    }
+
+    setaCep = (texto) =>
+    {
+        this.setState({ cepInput: texto });
+    }
+
+    ValidaCep = (cepRecebido) =>
+    {
+        var cep = cepRecebido.replace(/\D/g, ''); //variavel cep somente com digitos
+        if(cep!=""){ //testa se  cep ta vazio
+            var validacep = /^[0-9]{8}$/;//Expressão regular para validar o CEP.
+
+            if(validacep.test(cep)){
+                this.buscarNaApi(cep);
+            }
+
+
+        }
+        else{//cep em branco
+            Alert.alert(
+                'Não foi possivel concluir',
+                'Campo do Cep está em branco',
+                [
+                  {text: 'Ok', onPress: () => console.log('Botao ok pressionado')},
+                ],
+                {cancelable: false},
+              );
         }
     }
 
@@ -31,13 +67,16 @@ export default class Main extends Component
             <Text>Consulta CEP</Text>
             <Text>Busque endereços de forma simples digitando apenas o  CEP</Text>
             <TextInput
-                onChangeText={(cepInput)=>this.setState({cepInput})}
-                value={this.state.cepInput}
-                placeholder="242200-045">
+                placeholder="242200-045"
+                style={estilos.inputDoCep}
+                onChangeText={this.setaCep}
+                value={this.state.cepInput}>
             </TextInput>
             <TouchableOpacity
-                style={styles.botaoConfirmar}
-                onPress={this.ValidaCep}>
+                style={estilos.botaoConfirmar}
+                onPress={
+                    ()=>this.ValidaCep(this.state.cepInput)
+                    }>
                 <Text>
                     Confirmar
                 </Text>
@@ -51,13 +90,14 @@ export default class Main extends Component
 
 /* CSS*/
 
-const styles=StyleSheet.create({
+const estilos=StyleSheet.create(
+    {
         inputDoCep:
         {
-            fontSize:26,
-            color:"black",
-            fontWeight:"bold",
-            lineHeight: 10
+            margin:15,
+            height:40,
+            borderColor:"#7a42f4",
+            borderWidth: 1,
         },
         botaoConfirmar:
         {
