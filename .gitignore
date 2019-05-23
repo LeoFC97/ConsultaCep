@@ -1,2 +1,4 @@
 
 *.gradle
+ConsultaCep/android/gradle/wrapper/gradle-wrapper.properties
+ConsultaCep/android/app/build.gradle
