@@ -10,7 +10,7 @@ export default class Main extends Component
     {
         contador:0,
         objFull:[],
-        cepInput:""
+        cepInput:"24220045"
     };
 
     incrementarContador = () =>
@@ -82,12 +82,12 @@ export default class Main extends Component
         if(this.state.contador!=0)
         {
             return(  
-                <View style={estilos.container} >
-                    <Text>Cep: {this.state.objFull.cep}</Text>
-                    <Text>Rua: {this.state.objFull.logradouro}</Text>
-                    <Text>Bairro: {this.state.objFull.bairro}</Text>
-                    <Text>Cidade: {this.state.objFull.localidade}</Text>
-                    <Text>Estado: {this.state.objFull.uf}</Text>
+                <View style={estilos.containerResultado} >
+                    <Text style={estilos.resultadoTexto}>Cep: {this.state.objFull.cep}</Text>
+                    <Text style={estilos.resultadoTexto} >Rua: {this.state.objFull.logradouro}</Text>
+                    <Text style={estilos.resultadoTexto} >Bairro: {this.state.objFull.bairro}</Text>
+                    <Text style={estilos.resultadoTexto} >Cidade: {this.state.objFull.localidade}</Text>
+                    <Text style={estilos.resultadoTexto} >Estado: {this.state.objFull.uf}</Text>
                 </View>
     
             )
@@ -126,6 +126,21 @@ export default class Main extends Component
 
 const estilos=StyleSheet.create(
     {
+        resultadoTexto:
+        {
+            fontSize:14,
+            fontWeight:"bold",
+            color: "black"
+        },
+        containerResultado:
+        {
+            backgroundColor:"#FFF",
+            borderWidth:1,
+            borderColor:"#DDD",
+            borderRadius:5,
+            padding: 20,
+            marginBottom:20
+        },
         container:
         {
             flex:1,
@@ -154,14 +169,5 @@ const estilos=StyleSheet.create(
             fontSize:16,
             color:"#da552f",
             fontWeight:"bold"
-        },
-        loading:{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center'
         }
     });
