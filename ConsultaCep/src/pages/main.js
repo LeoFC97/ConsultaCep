@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View,Text,FlatList,TouchableOpacity,StyleSheet,TextInput,Alert,ActivityIndicator} from 'react-native'
+import {View,Text,FlatList,StyleSheet,TextInput,Alert,ActivityIndicator} from 'react-native'
+import { Button } from 'react-native-elements';
 import api from '../services/api'
 
 export default class Main extends Component
@@ -83,7 +84,7 @@ export default class Main extends Component
         {
             return(  
                 <View style={estilos.containerResultado} >
-                    <Text style={estilos.resultadoTexto}>Cep: {this.state.objFull.cep}</Text>
+                    <Text style={estilos.resultadoCep}>Cep: {this.state.objFull.cep}</Text>
                     <Text style={estilos.resultadoTexto} >Rua: {this.state.objFull.logradouro}</Text>
                     <Text style={estilos.resultadoTexto} >Bairro: {this.state.objFull.bairro}</Text>
                     <Text style={estilos.resultadoTexto} >Cidade: {this.state.objFull.localidade}</Text>
@@ -98,23 +99,22 @@ export default class Main extends Component
     {
         return(
             <View style={estilos.container}>
-            <Text>Consulta CEP</Text>
-            <Text>Busque endereços de forma simples digitando apenas o  CEP</Text>
+            <Text style={estilos.titulo}>Consulta CEP</Text>
+            <Text style={estilos.subtitulo} >Busque endereços de forma simples digitando apenas o  CEP</Text>
             <TextInput
                 placeholder="12345678"
                 style={estilos.inputDoCep}
                 onChangeText={this.setaCep}
                 value={this.state.cepInput}>
             </TextInput>
-            <TouchableOpacity
-                style={estilos.botaoConfirmar}
+            <Button
+                title="Pesquisar"
+                
+                //style={estilos.botaoConfirmar}
                 onPress={
                     ()=>this.ValidaCep(this.state.cepInput)
                     }>
-                <Text style={estilos.botaoConfirmarTexto}>
-                    Confirmar
-                </Text>
-            </TouchableOpacity>
+            </Button>
             {this.gerarTabelas()}
             </View>
             );
@@ -126,10 +126,24 @@ export default class Main extends Component
 
 const estilos=StyleSheet.create(
     {
+        subtitulo:
+        {
+            fontSize:17,
+            color:"black"
+        },
+        titulo:
+        {
+            fontSize:29,
+            color:"black"
+        },
+        resultadoCep:
+        {
+            fontSize:16,
+            fontWeight:"bold"
+        },
         resultadoTexto:
         {
             fontSize:14,
-            fontWeight:"bold",
             color: "black"
         },
         containerResultado:
@@ -152,17 +166,6 @@ const estilos=StyleSheet.create(
             height:40,
             borderColor:"#7a42f4",
             borderWidth: 1,
-        },
-        botaoConfirmar:
-        {
-            height:32,
-            borderRadius:5,
-            borderWidth:2,
-            borderColor:"#DA552F",
-            backgroundColor:"transparent",
-            justifyContent: "center",
-            alignItems:"center",
-            marginTop:10
         },
         botaoConfirmarTexto:
         {
